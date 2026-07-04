@@ -1,0 +1,10 @@
+# Ambientes Virtuais e Cache
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Credenciais e Arquivos Sensíveis
+.env
+
+# Dados brutos (Não versionamos dados pesados no Git)
+data/

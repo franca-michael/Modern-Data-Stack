@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres_oltp:
+    image: postgres:15
+    container_name: mds_oltp
+    environment:
+      POSTGRES_USER: ${OLTP_USER}
+      POSTGRES_PASSWORD: ${OLTP_PASSWORD}
+      POSTGRES_DB: ${OLTP_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_oltp:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  postgres_olap:
+    image: postgres:15
+    container_name: mds_olap
+    environment:
+      POSTGRES_USER: ${OLAP_USER}
+      POSTGRES_PASSWORD: ${OLAP_PASSWORD}
+      POSTGRES_DB: ${OLAP_DB}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_olap:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata_oltp:
+  pgdata_olap:

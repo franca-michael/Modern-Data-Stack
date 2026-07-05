@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: ${OLTP_PASSWORD}
       POSTGRES_DB: ${OLTP_DB}
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - pgdata_oltp:/var/lib/postgresql/data
     restart: unless-stopped
@@ -22,7 +22,7 @@ services:
       POSTGRES_PASSWORD: ${OLAP_PASSWORD}
       POSTGRES_DB: ${OLAP_DB}
     ports:
-      - "5433:5432"
+      - "5435:5432"
     volumes:
       - pgdata_olap:/var/lib/postgresql/data
     restart: unless-stopped

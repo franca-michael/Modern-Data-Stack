@@ -1,0 +1,13 @@
+ecommerce_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      threads: 4
+      # O dbt vai buscar essas variáveis direto do seu .env
+      host: localhost
+      port: 5435
+      user: "{{ env_var('OLAP_USER') }}"
+      password: "{{ env_var('OLAP_PASSWORD') }}"
+      dbname: "{{ env_var('OLAP_DB') }}"
+      schema: analytics

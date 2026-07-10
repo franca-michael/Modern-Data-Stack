@@ -17,7 +17,7 @@ O projeto simula a separação física entre sistemas operacionais e analíticos
 - **Linguagem:** Python 3.12 (gerenciado via `pyenv` e `poetry`)
 - **Bancos de Dados:** PostgreSQL (2 containers separados para OLTP e OLAP)
 - **Ingestão (Extract & Load):** Scripts customizados em Python (`pandas`, `sqlalchemy`) utilizando processamento em *chunks* para eficiência de memória.
-- **Transformação (Transform):** `dbt Core` (Arquitetura Medalhão: Bronze, Prata, Ouro) - *Em andamento*
+- **Transformação (Transform):** `dbt Core` (Arquitetura Medalhão: Bronze, Prata, Ouro)
 - **Visualização de Banco:** pgAdmin4
 
 ## 🚀 Status do Projeto
@@ -26,10 +26,11 @@ O projeto simula a separação física entre sistemas operacionais e analíticos
 - [x] **Infraestrutura em Containers:** Spin-up do banco transacional (OLTP), Data Warehouse (OLAP) e pgAdmin.
 - [x] **Seed Inicial (Simulação do Sistema):** Carga dos arquivos CSV para o PostgreSQL OLTP.
 - [x] **Pipeline EL (Extract & Load):** Extração de dados do OLTP e ingestão no schema `raw` do OLAP, com otimização de RAM (streaming por lotes).
-- [ ] **Integração dbt:** Inicialização do dbt Core com profiles baseados em variáveis de ambiente.
-- [ ] **Modelagem Bronze/Prata:** Limpeza, padronização e cruzamento de entidades.
-- [ ] **Modelagem Ouro:** Construção das tabelas Fato e Dimensão prontas para o BI.
-- [ ] **Orquestração e Dashboard:** (Próximos passos).
+- [x] **Integração dbt:** Inicialização do dbt Core com profiles baseados em variáveis de ambiente.
+- [x] **Modelagem Bronze/Prata:** Limpeza, padronização e cruzamento de entidades (`stg_customers`, `stg_orders`).
+- [x] **Modelagem Ouro:** Construção da tabela Fato para BI (`fct_customer_orders`).
+- [ ] **Qualidade de Dados:** Implementação de testes automatizados no dbt (schema tests).
+- [ ] **Orquestração e Dashboard:** (Em definição arquitetural).
 
 ## 💻 Como rodar (Até o momento)
 
@@ -39,12 +40,19 @@ O projeto simula a separação física entre sistemas operacionais e analíticos
    ```bash
    docker compose up -d
    ```
-4.Instale as dependências:
+4. Instale as dependências:
    ```bash
    poetry install
    ```
-5.Execute a carga inicial (OLTP) e o pipeline de ingestão (OLAP):
+5. Execute a carga inicial (OLTP) e o pipeline de ingestão (OLAP):
    ```bash
    poetry run python src/load_olist_data.py
    poetry run python src/el_pipeline.py
+   ```
+6. Execute as transformações do dbt:
+   ```bash
+   # Carregue as variáveis de ambiente e rode o dbt
+   export $(cat .env | xargs)
+   cd ecommerce_analytics
+   poetry run dbt run
    ```

@@ -22,15 +22,17 @@ O projeto simula a separação física entre sistemas operacionais e analíticos
 
 ## 🚀 Status do Projeto
 
-- [x] **Configuração de Ambiente Segura:** Criação de variáveis de ambiente (`.env`) e `.gitignore` garantindo protocolo *Zero Credential Exposure*.
-- [x] **Infraestrutura em Containers:** Spin-up do banco transacional (OLTP), Data Warehouse (OLAP) e pgAdmin.
-- [x] **Seed Inicial (Simulação do Sistema):** Carga dos arquivos CSV para o PostgreSQL OLTP.
-- [x] **Pipeline EL (Extract & Load):** Extração de dados do OLTP e ingestão no schema `raw` do OLAP, com otimização de RAM (streaming por lotes).
-- [x] **Integração dbt:** Inicialização do dbt Core com profiles baseados em variáveis de ambiente.
-- [x] **Modelagem Bronze/Prata:** Limpeza, padronização e cruzamento de entidades (`stg_customers`, `stg_orders`).
-- [x] **Modelagem Ouro:** Construção da tabela Fato para BI (`fct_customer_orders`).
-- [ ] **Qualidade de Dados:** Implementação de testes automatizados no dbt (schema tests).
-- [ ] **Orquestração e Dashboard:** (Em definição arquitetural).
+- [x] Configuração de Ambiente Segura: Criação de variáveis de ambiente (.env) e .gitignore garantindo protocolo Zero Credential Exposure.
+- [x] Infraestrutura em Containers: Spin-up do banco transacional (OLTP), Data Warehouse (OLAP) e pgAdmin.
+- [x] Seed Inicial (Simulação do Sistema): Carga dos arquivos CSV para o PostgreSQL OLTP.
+- [x] Pipeline EL (Extract & Load): Extração de dados do OLTP e ingestão no schema raw do OLAP, com otimização de RAM (streaming por lotes).
+- [x] Integração dbt: Inicialização do dbt Core com profiles baseados em variáveis de ambiente.
+- [x] Modelagem Bronze/Prata: Limpeza, padronização e cruzamento de entidades (stg_customers, stg_orders).
+- [x] Modelagem Ouro: Construção da tabela Fato para BI (fct_customer_orders).
+- [x] Qualidade de Dados: Implementação de testes automatizados no dbt (schema tests).
+- [x] Catálogo e Linhagem (Lineage): Geração de documentação interativa via dbt docs.
+- [ ] Orquestração e Dashboard: (Em definição arquitetural).
+
 
 ## 💻 Como rodar (Até o momento)
 
@@ -56,3 +58,15 @@ O projeto simula a separação física entre sistemas operacionais e analíticos
    cd ecommerce_analytics
    poetry run dbt run
    ```
+   # Valide a qualidade dos dados
+   ```
+   poetry run dbt test
+   ```
+
+7. Gere a documentação do dbt:
+   ```
+   poetry run dbt docs generate
+   poetry run dbt docs serve
+   ```
+   # Acesse http://localhost:8080 no seu navegador
+

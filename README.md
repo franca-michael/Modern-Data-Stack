@@ -1,12 +1,12 @@
 # 🛒 E-commerce Analytics: Modern Data Stack (Em Construção 🚧)
 
-Este repositório contém um projeto prático de Engenharia de Dados e Analytics Engineering focado no setor de varejo/e-commerce. O objetivo é construir uma plataforma de dados ponta a ponta utilizando exclusivamente ferramentas **Open Source**, aplicando as melhores práticas do *Modern Data Stack (MDS)*.
+Este repositório contém um projeto prático de Engenharia de Dados e Analytics Engineering focado no setor de varejo/e-commerce. O objetivo é construir uma plataforma de dados de ponta a ponta utilizando exclusivamente ferramentas **Open Source**, aplicando as melhores práticas do *Modern Data Stack (MDS)*.
 
 ## 🎯 Objetivo de Negócio
 Simular o ambiente de dados de um e-commerce para centralizar informações transacionais isoladas, permitindo responder a perguntas críticas de negócio, como:
 - Comportamento de compras e análise de RFM (Recência, Frequência, Valor Monetário).
 - Performance logística e tempo de entrega.
-- Análise de produtos e vendas.
+- Análise de produtos e vendas por região.
 
 **Fonte de Dados:** Dataset público da Olist (Kaggle).
 
@@ -18,21 +18,22 @@ O projeto simula a separação física entre sistemas operacionais e analíticos
 - **Bancos de Dados:** PostgreSQL (2 containers separados para OLTP e OLAP)
 - **Ingestão (Extract & Load):** Scripts customizados em Python (`pandas`, `sqlalchemy`) utilizando processamento em *chunks* para eficiência de memória.
 - **Transformação (Transform):** `dbt Core` (Arquitetura Medalhão: Bronze, Prata, Ouro)
-- **Visualização de Banco:** pgAdmin4
+- **Visualização de Dados:** `Streamlit` e `Plotly` (Dashboard interativo em Python puro)
+- **Gestão de Base de Dados:** pgAdmin4
 
 ## 🚀 Status do Projeto
 
-- [x] Configuração de Ambiente Segura: Criação de variáveis de ambiente (.env) e .gitignore garantindo protocolo Zero Credential Exposure.
-- [x] Infraestrutura em Containers: Spin-up do banco transacional (OLTP), Data Warehouse (OLAP) e pgAdmin.
-- [x] Seed Inicial (Simulação do Sistema): Carga dos arquivos CSV para o PostgreSQL OLTP.
-- [x] Pipeline EL (Extract & Load): Extração de dados do OLTP e ingestão no schema raw do OLAP, com otimização de RAM (streaming por lotes).
-- [x] Integração dbt: Inicialização do dbt Core com profiles baseados em variáveis de ambiente.
-- [x] Modelagem Bronze/Prata: Limpeza, padronização e cruzamento de entidades (stg_customers, stg_orders).
-- [x] Modelagem Ouro: Construção da tabela Fato para BI (fct_customer_orders).
-- [x] Qualidade de Dados: Implementação de testes automatizados no dbt (schema tests).
-- [x] Catálogo e Linhagem (Lineage): Geração de documentação interativa via dbt docs.
-- [ ] Orquestração e Dashboard: (Em definição arquitetural).
-
+- [x] **Configuração de Ambiente Segura:** Criação de variáveis de ambiente (`.env`) e `.gitignore` garantindo protocolo *Zero Credential Exposure*.
+- [x] **Infraestrutura em Containers:** Spin-up do banco transacional (OLTP), Data Warehouse (OLAP) e pgAdmin.
+- [x] **Seed Inicial (Simulação do Sistema):** Carga dos arquivos CSV para o PostgreSQL OLTP.
+- [x] **Pipeline EL (Extract & Load):** Extração de dados do OLTP e ingestão no schema `raw` do OLAP, com otimização de RAM (streaming por lotes).
+- [x] **Integração dbt:** Inicialização do dbt Core com profiles baseados em variáveis de ambiente.
+- [x] **Modelagem Bronze/Prata:** Limpeza, padronização e cruzamento de entidades (`stg_customers`, `stg_orders`).
+- [x] **Modelagem Ouro:** Construção da tabela Fato para BI (`fct_customer_orders`).
+- [x] **Qualidade de Dados:** Implementação de testes automatizados no dbt (schema tests).
+- [x] **Catálogo e Linhagem (Lineage):** Geração de documentação interativa via `dbt docs`.
+- [x] **Visualização (Dashboard):** Construção de um painel analítico interativo consumindo a camada Ouro com Streamlit.
+- [ ] **Orquestração:** (Próximos passos para automação do pipeline).
 
 ## 💻 Como rodar (Até o momento)
 
@@ -69,4 +70,13 @@ O projeto simula a separação física entre sistemas operacionais e analíticos
    poetry run dbt docs serve
    ```
    # Acesse http://localhost:8080 no seu navegador
+
+8. Execute o dashboard:
+   # Volte para a raiz do projeto e carregue as variáveis
+   ```bash
+   cd ..
+   export $(cat .env | xargs)
+   poetry run streamlit run src/dashboard.py
+   ```
+# O painel abrirá automaticamente no seu navegador
 
